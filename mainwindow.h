@@ -17,5 +17,14 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+signals:
+    void toChoose();
+    void toRank();
+
+private slots:
+    void showMain();
+    void on_playBtn_clicked();
+    void on_rankBtn_clicked();
 };
 #endif // MAINWINDOW_H
