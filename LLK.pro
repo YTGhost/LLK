@@ -16,16 +16,33 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    choose.cpp \
     databasehelper.cpp \
+    login.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    play.cpp \
+    rank.cpp \
+    register.cpp \
+    time_thread.cpp
 
 HEADERS += \
+    choose.h \
     databasehelper.h \
-    mainwindow.h
+    login.h \
+    mainwindow.h \
+    play.h \
+    rank.h \
+    register.h \
+    time_thread.h
 
 FORMS += \
-    mainwindow.ui
+    choose.ui \
+    login.ui \
+    mainwindow.ui \
+    play.ui \
+    rank.ui \
+    register.ui
 
 QT +=sql
 
@@ -33,3 +50,7 @@ QT +=sql
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    media.qrc \
+    pic.qrc
