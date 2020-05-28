@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/mp3">
-        <file>tokyo blue weeps - Sundaland of mind.mp3</file>
+    <qresource prefix="/">
+        <file>media/tokyo blue weeps - Sundaland of mind.mp3</file>
     </qresource>
 </RCC>

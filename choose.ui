@@ -13,14 +13,89 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>600</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/pic/background/background.jpg);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>40</y>
+     <width>491</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>20</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>请选择你想要的难度</string>
+   </property>
+  </widget>
   <widget class="QPushButton" name="beginnerBtn">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>110</y>
+     <x>320</x>
+     <y>120</y>
      <width>141</width>
      <height>81</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft Yahei</family>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+QPushButton
+{
+    /*字体为微软雅黑*/
+    font-family:Microsoft Yahei;
+    /*字体大小为20点*/
+    font-size:15pt;
+    /*字体颜色为白色*/    
+    color:white;
+    /*背景颜色*/  
+    background-color:rgb(255, 170, 127);
+    /*边框圆角半径为8像素*/ 
+    border-radius:8px;
+}
+
+/*按钮停留态*/
+QPushButton:hover
+{
+    /*背景颜色*/  
+
+	background-color: rgb(255, 170, 0);
+}
+
+/*按钮按下态*/
+QPushButton:pressed
+{
+    /*背景颜色*/  
+	background-color: rgb(255, 170, 127);
+    /*左内边距为3像素，让按下时字向右移动3像素*/  
+    padding-left:3px;
+    /*上内边距为3像素，让按下时字向下移动3像素*/  
+    padding-top:3px;
+}</string>
    </property>
    <property name="text">
     <string>入门</string>
@@ -29,11 +104,53 @@
   <widget class="QPushButton" name="intermediateBtn">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>210</y>
+     <x>320</x>
+     <y>220</y>
      <width>141</width>
      <height>81</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft Yahei</family>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+QPushButton
+{
+    /*字体为微软雅黑*/
+    font-family:Microsoft Yahei;
+    /*字体大小为20点*/
+    font-size:15pt;
+    /*字体颜色为白色*/    
+    color:white;
+    /*背景颜色*/  
+    background-color: rgb(170, 255, 127);
+    /*边框圆角半径为8像素*/ 
+    border-radius:8px;
+}
+
+/*按钮停留态*/
+QPushButton:hover
+{
+    /*背景颜色*/  
+
+	
+	background-color: rgb(85, 170, 0);
+}
+
+/*按钮按下态*/
+QPushButton:pressed
+{
+    /*背景颜色*/  
+	background-color: rgb(85, 170, 0);
+    /*左内边距为3像素，让按下时字向右移动3像素*/  
+    padding-left:3px;
+    /*上内边距为3像素，让按下时字向下移动3像素*/  
+    padding-top:3px;
+}</string>
    </property>
    <property name="text">
     <string>初级</string>
@@ -42,11 +159,55 @@
   <widget class="QPushButton" name="mediumBtn">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>320</x>
      <y>320</y>
      <width>141</width>
      <height>81</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft Yahei</family>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+QPushButton
+{
+    /*字体为微软雅黑*/
+    font-family:Microsoft Yahei;
+    /*字体大小为20点*/
+    font-size:15pt;
+    /*字体颜色为白色*/    
+    color:white;
+    /*背景颜色*/ 
+background-color: rgb(85, 170, 255); 
+
+    /*边框圆角半径为8像素*/ 
+    border-radius:8px;
+}
+
+/*按钮停留态*/
+QPushButton:hover
+{
+    /*背景颜色*/  
+
+	
+	background-color: rgb(85, 139, 255);
+	
+}
+
+/*按钮按下态*/
+QPushButton:pressed
+{
+    /*背景颜色*/  
+	background-color: rgb(85, 139,255);
+    /*左内边距为3像素，让按下时字向右移动3像素*/  
+    padding-left:3px;
+    /*上内边距为3像素，让按下时字向下移动3像素*/  
+    padding-top:3px;
+}</string>
    </property>
    <property name="text">
     <string>中级</string>
@@ -55,11 +216,55 @@
   <widget class="QPushButton" name="advancedBtn">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>320</x>
      <y>420</y>
      <width>141</width>
      <height>81</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft Yahei</family>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+QPushButton
+{
+    /*字体为微软雅黑*/
+    font-family:Microsoft Yahei;
+    /*字体大小为20点*/
+    font-size:15pt;
+    /*字体颜色为白色*/    
+    color:white;
+    /*背景颜色*/  
+	background-color: rgb(170, 170, 255);
+   
+    /*边框圆角半径为8像素*/ 
+    border-radius:8px;
+}
+
+/*按钮停留态*/
+QPushButton:hover
+{
+    /*背景颜色*/  
+
+	
+	
+	 background-color: rgb(85, 85, 255);
+}
+
+/*按钮按下态*/
+QPushButton:pressed
+{
+    /*背景颜色*/  
+	 background-color: rgb(85, 85, 255);
+    /*左内边距为3像素，让按下时字向右移动3像素*/  
+    padding-left:3px;
+    /*上内边距为3像素，让按下时字向下移动3像素*/  
+    padding-top:3px;
+}background-color: rgb(85, 85, 255);</string>
    </property>
    <property name="text">
     <string>高级</string>
