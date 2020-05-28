@@ -25,7 +25,7 @@
    <widget class="QLineEdit" name="userLineEdit">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>70</x>
       <y>20</y>
       <width>200</width>
       <height>50</height>
@@ -35,7 +35,7 @@
    <widget class="QLineEdit" name="passwordLineEdit">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>70</x>
       <y>90</y>
       <width>200</width>
       <height>50</height>
@@ -45,7 +45,7 @@
    <widget class="QLineEdit" name="confirmLineEdit">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>70</x>
       <y>160</y>
       <width>200</width>
       <height>50</height>
@@ -55,7 +55,7 @@
    <widget class="QLineEdit" name="emailLineEdit">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>70</x>
       <y>230</y>
       <width>200</width>
       <height>50</height>
@@ -65,7 +65,7 @@
    <widget class="QLineEdit" name="codeLineEdit">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>70</x>
       <y>300</y>
       <width>200</width>
       <height>50</height>
@@ -88,7 +88,7 @@
    <widget class="QLabel" name="userLabel">
     <property name="geometry">
      <rect>
-      <x>350</x>
+      <x>290</x>
       <y>30</y>
       <width>300</width>
       <height>30</height>
@@ -101,7 +101,7 @@
    <widget class="QLabel" name="passwordLabel">
     <property name="geometry">
      <rect>
-      <x>350</x>
+      <x>290</x>
       <y>100</y>
       <width>300</width>
       <height>30</height>
@@ -114,7 +114,7 @@
    <widget class="QLabel" name="confirmLabel">
     <property name="geometry">
      <rect>
-      <x>350</x>
+      <x>290</x>
       <y>170</y>
       <width>300</width>
       <height>30</height>
@@ -127,7 +127,7 @@
    <widget class="QLabel" name="emailLabel">
     <property name="geometry">
      <rect>
-      <x>350</x>
+      <x>290</x>
       <y>240</y>
       <width>300</width>
       <height>30</height>

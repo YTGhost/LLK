@@ -81,7 +81,7 @@ void Register::userValidator()
 void Register::passwordValidator()
 {
     QString image = "error";
-    QString content = "8~16 digits composed of letters and numbers";
+    QString content = "8~16 digits letters and numbers";
     QString color = "red";
     QString pattern("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$");
     QRegExp rx(pattern);
