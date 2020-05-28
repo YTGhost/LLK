@@ -11,5 +11,6 @@
         <file>pic/icon/email-focused.png</file>
         <file>pic/icon/confirm.png</file>
         <file>pic/icon/confirm-focused.png</file>
+        <file>pic/background/background.jpg</file>
     </qresource>
 </RCC>
