@@ -6,5 +6,6 @@
         <file>pic/icon/lock.png</file>
         <file>pic/icon/user-focused.png</file>
         <file>pic/icon/user.png</file>
+        <file>pic/background/name.jpg</file>
     </qresource>
 </RCC>
