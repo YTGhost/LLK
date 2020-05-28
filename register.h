@@ -20,6 +20,10 @@ private:
 
 private slots:
     void showRegister();
+    void userValidator();
+    void passwordValidator();
+    void emailValidator();
+    void confirmValidator();
 };
 
 #endif // REGISTER_H

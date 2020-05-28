@@ -7,5 +7,9 @@
         <file>pic/icon/user-focused.png</file>
         <file>pic/icon/user.png</file>
         <file>pic/background/name.jpg</file>
+        <file>pic/icon/email.png</file>
+        <file>pic/icon/email-focused.png</file>
+        <file>pic/icon/confirm.png</file>
+        <file>pic/icon/confirm-focused.png</file>
     </qresource>
 </RCC>
