@@ -1,16 +1,10 @@
 <RCC>
-    <qresource prefix="/icon">
-        <file>correct.png</file>
-        <file>error.png</file>
-        <file>lock.png</file>
-        <file>lock-focused.png</file>
-        <file>user.png</file>
-        <file>user-focused.png</file>
-    </qresource>
-    <qresource prefix="/background">
-        <file>user.png</file>
-    </qresource>
-    <qresource prefix="/pattern">
-        <file>user.png</file>
+    <qresource prefix="/">
+        <file>pic/icon/correct.png</file>
+        <file>pic/icon/error.png</file>
+        <file>pic/icon/lock-focused.png</file>
+        <file>pic/icon/lock.png</file>
+        <file>pic/icon/user-focused.png</file>
+        <file>pic/icon/user.png</file>
     </qresource>
 </RCC>
