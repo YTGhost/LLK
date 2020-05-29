@@ -45,7 +45,11 @@ FORMS += \
     rank.ui \
     register.ui
 
-QT +=sql
+QT += sql
+
+QT += multimedia
+
+QT += testlib
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -54,4 +58,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     media.qrc \
-    pic.qrc
+    pic.qrc \
+    test.qrc

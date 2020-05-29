@@ -46,6 +46,9 @@
    <property name="text">
     <string>请选择你想要的难度</string>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
   </widget>
   <widget class="QPushButton" name="beginnerBtn">
    <property name="geometry">
