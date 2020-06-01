@@ -1,5 +1,7 @@
 #ifndef REGISTER_H
 #define REGISTER_H
+#define TRUE 1
+#define FALSE 0
 
 #include <QDialog>
 
@@ -24,6 +26,8 @@ private slots:
     void passwordValidator();
     void emailValidator();
     void confirmValidator();
+    void on_sendcodeBtn_clicked();
+    void on_registerBtn_clicked();
 };
 
 #endif // REGISTER_H
