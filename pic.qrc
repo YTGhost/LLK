@@ -1,0 +1,28 @@
+<RCC>
+    <qresource prefix="/">
+        <file>pic/icon/correct.png</file>
+        <file>pic/icon/error.png</file>
+        <file>pic/icon/lock-focused.png</file>
+        <file>pic/icon/lock.png</file>
+        <file>pic/icon/user-focused.png</file>
+        <file>pic/icon/user.png</file>
+        <file>pic/background/name.jpg</file>
+        <file>pic/icon/email.png</file>
+        <file>pic/icon/email-focused.png</file>
+        <file>pic/icon/confirm.png</file>
+        <file>pic/icon/confirm-focused.png</file>
+        <file>pic/background/background.jpg</file>
+        <file>pic/pattern/1.png</file>
+        <file>pic/pattern/10.png</file>
+        <file>pic/pattern/2.png</file>
+        <file>pic/pattern/3.png</file>
+        <file>pic/pattern/4.png</file>
+        <file>pic/pattern/5.png</file>
+        <file>pic/pattern/6.png</file>
+        <file>pic/pattern/7.png</file>
+        <file>pic/pattern/8.png</file>
+        <file>pic/pattern/9.png</file>
+        <file>pic/background/progress.png</file>
+        <file>pic/background/rank.png</file>
+    </qresource>
+</RCC>
