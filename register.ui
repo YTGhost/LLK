@@ -137,6 +137,19 @@
      <string/>
     </property>
    </widget>
+   <widget class="QPushButton" name="sendcodeBtn">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>310</y>
+      <width>151</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>发送验证码</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>
