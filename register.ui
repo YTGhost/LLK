@@ -82,7 +82,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Register</string>
+     <string>注册</string>
     </property>
    </widget>
    <widget class="QLabel" name="userLabel">

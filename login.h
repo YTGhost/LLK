@@ -2,7 +2,8 @@
 #define LOGIN_H
 #include "databasehelper.h"
 #include <QDialog>
-
+#include<QSqlQuery>
+#include<qdebug.h>
 namespace Ui {
 class Login;
 }
@@ -15,7 +16,7 @@ public:
     explicit Login(QWidget *parent = nullptr);
     ~Login();
     databasehelper *helper;
-
+    QString select(QString username);
 private:
     Ui::Login *ui;
 
