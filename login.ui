@@ -45,40 +45,40 @@
    <widget class="QPushButton" name="registerBtn">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>240</y>
+      <x>100</x>
+      <y>260</y>
       <width>161</width>
       <height>61</height>
      </rect>
     </property>
     <property name="text">
-     <string>create an account</string>
+     <string>创建账户</string>
     </property>
    </widget>
    <widget class="QPushButton" name="loginBtn">
     <property name="geometry">
      <rect>
       <x>340</x>
-      <y>240</y>
+      <y>260</y>
       <width>121</width>
       <height>61</height>
      </rect>
     </property>
     <property name="text">
-     <string>login</string>
+     <string>登录</string>
     </property>
    </widget>
    <widget class="QPushButton" name="forgetBtn">
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>320</y>
+      <y>340</y>
       <width>141</width>
       <height>51</height>
      </rect>
     </property>
     <property name="text">
-     <string>forget</string>
+     <string>忘记密码</string>
     </property>
    </widget>
    <widget class="QGraphicsView" name="graphicsView">
@@ -89,6 +89,19 @@
       <width>200</width>
       <height>80</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>220</y>
+      <width>201</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>

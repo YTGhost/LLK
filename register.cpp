@@ -1,10 +1,6 @@
 #include "register.h"
 #include "ui_register.h"
 #include <QPropertyAnimation>
-#include<time.h>
-#include <QSqlQuery>
-#include <string>
-
 
 Register::Register(QWidget *parent) :
     QDialog(parent),

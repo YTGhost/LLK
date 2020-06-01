@@ -43,17 +43,41 @@ Login::~Login()
     delete ui;
 }
 
+QString Login::select(QString username){
+    QString s=QString("select password from user_info where username=%1").arg(username);
+    QSqlQuery query;
+    QString pas;
+    query.exec(s);
+    while (query.next())
+        {
+             pas=query.value(0).toString() ;
+             //qDebug()<<pas;
+        }
+    return pas;
+
+}
+
 void Login::on_loginBtn_clicked()
 {
-    emit toMain();
-    QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
-    animation->setDuration(2000);
-    animation->setStartValue(1);
-    animation->setEndValue(0);
-    animation->start();
-    connect(animation, &QPropertyAnimation::finished, [=] {
-        this->hide();
-    });
+    if(ui->userLineEdit->text()!=""&&
+            ui->passwordLineEdit->text()==select(ui->userLineEdit->text())){
+        emit toMain();
+        QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
+        animation->setDuration(2000);
+        animation->setStartValue(1);
+        animation->setEndValue(0);
+        animation->start();
+        connect(animation, &QPropertyAnimation::finished, [=] {
+            this->hide();
+        });
+    }
+    else{
+        ui->userLineEdit->setText("");
+        ui->passwordLineEdit->setText("");
+        QString s=QString::fromLocal8Bit("ÇëÔÙÊÔÒ»´Î£¡");
+        ui->label->setText(s);
+        ui->label->setStyleSheet("color:red;");
+    }
 }
 
 void Login::on_registerBtn_clicked()

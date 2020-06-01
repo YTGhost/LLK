@@ -4,6 +4,9 @@
 #define FALSE 0
 
 #include <QDialog>
+#include<time.h>
+#include <QSqlQuery>
+#include <string>
 
 namespace Ui {
 class Register;
