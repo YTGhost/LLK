@@ -2,14 +2,9 @@
 #include "ui_register.h"
 #include <QPropertyAnimation>
 #include<time.h>
+#include <QSqlQuery>
+#include <string>
 
-//用于存放从文本框得到的注册信息
-QString username = "",email = "",password = "";
-//用于判断验证码是否正确
-int codeflag = FALSE;
-//用于存放随机生成的验证码
-char ch[8];
-char temp;
 
 Register::Register(QWidget *parent) :
     QDialog(parent),
@@ -80,6 +75,7 @@ void Register::userValidator()
     QString color = "red";
     QString pattern("^.{1,10}$");
     QRegExp rx(pattern);
+    username = "";
     if(ui->userLineEdit->text().contains(rx)){
         image = "correct";
         content = QString::fromLocal8Bit("输入正确！");
@@ -111,6 +107,7 @@ void Register::confirmValidator()
     QString image = "error";
     QString content = QString::fromLocal8Bit("再次输入错误！");
     QString color = "red";
+    password = "";
     if(ui->confirmLineEdit->text() == ui->passwordLineEdit->text()){
         image = "correct";
         content = QString::fromLocal8Bit("输入正确！");
@@ -128,6 +125,7 @@ void Register::emailValidator()
     QString color = "red";
     QString pattern("^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$");
     QRegExp rx(pattern);
+    email = "";
     if(ui->emailLineEdit->text().contains(rx)){
         image = "correct";
         content = QString::fromLocal8Bit("输入正确！");
@@ -140,6 +138,7 @@ void Register::emailValidator()
 
 void Register::on_sendcodeBtn_clicked()
 {
+    //产生8位验证码，区分大小写
     srand((int)time(0));
     for(int i = 0;i<8;i++){
         switch (rand()%3) {
@@ -156,11 +155,26 @@ void Register::on_sendcodeBtn_clicked()
         ch[i] = temp;
     }
 
-    if(email!=""){
+    if(email!=""){  //如果填入了正确邮箱
 
+        //从数据库中查找是否存在邮箱
+        QString s=QString("select email from user_info");
+        QSqlQuery query;
+        QString pas;
+        query.exec(s);
+        while (query.next())
+        {
+            pas=query.value(0).toString() ;
+            if(email==pas){   //如果存在
+                ui->emailLineEdit->setText(QString::fromLocal8Bit("此邮箱已存在！"));
+                return;
+            }
+        }
+
+        //不存在就发送邮件
         //send email  //send email  //send email
 
-        printf("%s\n",ch);
+
     }
 }
 
@@ -179,15 +193,12 @@ void Register::on_registerBtn_clicked()
 
     if(email!=""&&username!=""&&password!=""&&codeflag){
 
-        QByteArray ba_pass = password.toLatin1();
-        char* ch_pass = ba_pass.data();
-        QByteArray ba_name = username.toLatin1();
-        char* ch_name = ba_name.data();
-        QByteArray ba_email = email.toLatin1();
-        char* ch_email = ba_email.data();
-
-        //insert into database  //insert into database  //insert into database
-
-        printf("%s,%s,%s\n",ch_name,ch_email,ch_pass);
+        //插入数据库
+        QString s = QString("insert into user_info values(" + username + "," + password + "," + email + ")");
+        QSqlQuery query;
+        int result = query.exec(s);
+        if(result){
+            //跳转到游戏界面
+        }
     }
 }

@@ -16,6 +16,13 @@ class Register : public QDialog
 public:
     explicit Register(QWidget *parent = nullptr);
     ~Register();
+    //用于存放从文本框得到的注册信息
+    QString username = "",email = "",password = "";
+    //用于判断验证码是否正确
+    int codeflag = FALSE;
+    //用于存放随机生成的验证码
+    char ch[8];
+    char temp;
 
 private:
     Ui::Register *ui;
