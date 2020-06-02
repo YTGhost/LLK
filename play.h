@@ -4,9 +4,10 @@
 #include <QDialog>
 #include "time_thread.h"
 #include <QTime>
-#include <QSoundEffect>
+
 #include <QDebug>
 #include <QtTest/QTest>
+#include "playworker.h"
 
 namespace Ui {
 class Play;
@@ -19,63 +20,32 @@ class Play : public QDialog
 public:
     explicit Play(QWidget *parent = nullptr);
     ~Play();
-    void getPoint();
-    // ÄÑ¶È£º1ÎªÈëÃÅ£¬2Îª³õ¼¶£¬3ÎªÖĞ¼¶£¬4Îª¸ß¼¶
+
+    void getPoint();// éš¾åº¦ï¼š1ä¸ºå…¥é—¨ï¼Œ2ä¸ºåˆçº§ï¼Œ3ä¸ºä¸­çº§ï¼Œ4ä¸ºé«˜çº§
     int level;
     time_thread *time;
     int curTime;
 
     // test
-    QPushButton ***btns;//pushbuttonÊı×é
-    int hb, wb;//¸ß¶àÉÙ¸ö¸ñ×Ó£¬¿í¶àÉÙ¸ö¸ñ×Ó
-    int lastClickedH, lastClickedW;//ÉÏÒ»¸öµã»÷µÄ×ø±ê
-    int remains;//Ê£Óà¶àÉÙ¸ö¸ñ×Ó
-    int **types;//¸ñ×ÓµÄÀàĞÍµÄÊı×é¡£0´ú±í±»ÇåÀíÁË£¬1-15¸ñ×Ó´ú±íÒ»ÖÖ¸ñ×Ó£¨Í¼Æ¬£©
-    int figures;//¶àÉÙÖÖ¸ñ×Ó£¨Í¼Æ¬£©
-    QPixmap icons[16];//Í¼Æ¬Êı×é
-    QPixmap imageLine[2], imageTurn[4];//Á¬ÏßµÄÍ¼Æ¬µÄÊı×é
-    QTimer *pTimer;//¶¨Ê±Æ÷
-    QTime *pTime;//¼ÆÊ±Æ÷
-    QSoundEffect clickSound;//µã»÷ÒôĞ§
-    QSoundEffect endsSound;//ÓÎÏ·½áÊøÒôĞ§
-    bool isStarted;//ÓÎÏ·¿ªÊ¼ÁËÂğ
-
-    //µã»÷Á½¸öÅä¶Ôµãºó£¬Åä¶ÔµãºÍÖĞ¼ä¶Ëµã¹¹³ÉµÄ½á¹¹Ìå
-    struct LinkPoints{
-        int cnt;
-        int pt[4][2];//0ÊÇµÚÒ»¸ö¶Ëµã£¬cnt+1ÊÇµÚ¶ş¸ö¶Ëµã£¬ÆäËûÊÇÖĞ¼äµã
-    };
-
-    //ÉèÖÃÓÎÏ·¸ß¡¢¿í¡¢ÈËÊı
-    void setDifficulty(int setHb, int setWb, int setFigure);
-
-    //ÉèÖÃÓÎÏ·³¡¾°
+    //è®¾ç½®æ¸¸æˆåœºæ™¯
     void setBlocks();
 
-    //ÅĞ¶¨ÄÜ·ñ²»¹Õ¡¢Ò»¹Õ¡¢Á½¹ÕÁ¬½Ó
-    bool canNoCorner(int lstH, int lstW, int thisH, int thisW, LinkPoints &lp);
-    bool canOneCorner(int lstH, int lstW, int thisH, int thisW, LinkPoints &lp);
-    bool canTwoCorner(int lstH, int lstW, int thisH, int thisW, LinkPoints &lp);
-
-    //Çå³¡
+    //æ¸…åœº
     void stageClear();
-
-    //»ñµÃÒ»¸öµãµ½ÁíÒ»¸öµãµÄ¾­¹ıµÄÖĞ¼äµãµÄ·½Ïò
-    int getDirection(int lstH, int lstW, int thisH, int thisW, int midH, int midW);
-
-    //»­Ò»ÌõÏßºÍÒ»×éÏß
-    void drawALine(int lstH, int lstW, int thisH, int thisW, bool isW);
-    void drawLines(LinkPoints lp);
 
 private:
     Ui::Play *ui;
 
+    playworker *worker;
+
 private slots:
-    void onTimeOut();
-    void btnsClicked();
     void showPlay(int level);
     void on_pauseBtn_clicked();
     void updateTime(int time);
+    void updateLcdNumber(QString value);
+    void updateProgressBar(int value);
+    void goonPlay();
 };
 
 #endif // PLAY_H
+

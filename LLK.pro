@@ -23,9 +23,11 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     play.cpp \
+    playworker.cpp \
     rank.cpp \
     register.cpp \
     time_thread.cpp
+    playworker.cpp
 
 HEADERS += \
     choose.h \
@@ -33,9 +35,11 @@ HEADERS += \
     login.h \
     mainwindow.h \
     play.h \
+    playworker.h \
     rank.h \
     register.h \
     time_thread.h
+    playworker.h
 
 FORMS += \
     choose.ui \
