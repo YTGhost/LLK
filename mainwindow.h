@@ -21,10 +21,12 @@ private:
 signals:
     void toChoose();
     void toRank();
+    void toLogin();
 
 private slots:
     void showMain();
     void on_playBtn_clicked();
     void on_rankBtn_clicked();
+    void on_backBtn_clicked();
 };
 #endif // MAINWINDOW_H

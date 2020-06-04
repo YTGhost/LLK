@@ -62,3 +62,16 @@ void Rank::select(){
     }
 
 }
+
+void Rank::on_backBtn_clicked()
+{
+    emit toMain();
+    QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
+    animation->setDuration(2000);
+    animation->setStartValue(1);
+    animation->setEndValue(0);
+    animation->start();
+    connect(animation, &QPropertyAnimation::finished, [=] {
+        this->hide();
+    });
+}

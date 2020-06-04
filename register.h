@@ -6,6 +6,8 @@
 #include <QDialog>
 #include<time.h>
 #include <QSqlQuery>
+#include "smtp.h"
+#include <QMessageBox>
 #include <string>
 
 namespace Ui {
@@ -30,6 +32,10 @@ public:
 private:
     Ui::Register *ui;
 
+signals:
+    void toMain();  // 跳转mainwindow的信号（发送到mainwindow）
+    void toLogin(); // 跳转到login的信号
+
 private slots:
     void showRegister();
     void userValidator();
@@ -38,6 +44,7 @@ private slots:
     void confirmValidator();
     void on_sendcodeBtn_clicked();
     void on_registerBtn_clicked();
+    void on_backBtn_clicked();
 };
 
 #endif // REGISTER_H
