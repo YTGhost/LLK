@@ -154,7 +154,7 @@ void Register::on_sendcodeBtn_clicked()
     if(email!=""){  //如果填入了正确邮箱
 
         //从数据库中查找是否存在邮箱
-        QString s=QString("select email from user_info");
+        QString s = QString("select email from user_info");
         QSqlQuery query;
         QString pas;
         query.exec(s);
@@ -166,11 +166,10 @@ void Register::on_sendcodeBtn_clicked()
                 return;
             }
         }
-
         //不存在就发送邮件
-        //send email  //send email  //send email
-
-
+        Smtp *smtp = new Smtp();
+        smtp->send(email.toUtf8(), QString::fromLocal8Bit("欢迎注册开心连连看！"), QString::fromLocal8Bit("您的验证码为:%1，祝您游戏愉快!^_^").arg(ch));
+        QMessageBox::information(NULL, QString::fromLocal8Bit("发送成功"), QString::fromLocal8Bit("请前往邮箱查看验证码"), QString::fromLocal8Bit("确定"));
     }
 }
 
@@ -178,23 +177,47 @@ void Register::on_registerBtn_clicked()
 {    
     QString code;
     code = ui->codeLineEdit->text();
-    QByteArray ba = password.toLatin1();
+    QByteArray ba = code.toLatin1();
     char* chcode = ba.data();
     if(strcmp(ch,chcode)==0){
         codeflag = TRUE;
     }
     else{
         ui->codeLineEdit->setText(QString::fromLocal8Bit("验证码错误！"));
+        return;
     }
 
-    if(email!=""&&username!=""&&password!=""&&codeflag){
+    if(email != "" && username != "" && password != "" && codeflag){
 
         //插入数据库
-        QString s = QString("insert into user_info values(" + username + "," + password + "," + email + ")");
+        QString s = QString("insert into user_info (username, password, email) values ('%1', '%2', '%3')").arg(username).arg(password).arg(email);
         QSqlQuery query;
         int result = query.exec(s);
         if(result){
+            QMessageBox::information(NULL, QString::fromLocal8Bit("注册成功"), QString::fromLocal8Bit("接下来将跳转到游戏主界面"), QString::fromLocal8Bit("确定"));
             //跳转到游戏界面
+            emit toMain();
+            QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
+            animation->setDuration(2000);
+            animation->setStartValue(1);
+            animation->setEndValue(0);
+            animation->start();
+            connect(animation, &QPropertyAnimation::finished, [=] {
+                this->hide();
+            });
         }
     }
+}
+
+void Register::on_backBtn_clicked()
+{
+    emit toLogin();
+    QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
+    animation->setDuration(2000);
+    animation->setStartValue(1);
+    animation->setEndValue(0);
+    animation->start();
+    connect(animation, &QPropertyAnimation::finished, [=] {
+        this->hide();
+    });
 }

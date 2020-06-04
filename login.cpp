@@ -12,6 +12,9 @@ Login::Login(QWidget *parent) :
     // 连接数据库
     helper = new databasehelper();
 
+    // 播放背景音乐
+    music = new Music();
+
     // 设置GUI样式
     QString dialogQSS = "QDialog {background:qlineargradient(spread:pad,x1:1,y1:0,x2:0,y2:0,stop:0 #c31399,stop:1 #9118fd)}";
     QString widgetQSS = "QWidget {background-color: white; border-radius: 10px}";
@@ -44,7 +47,7 @@ Login::~Login()
 }
 
 QString Login::select(QString username){
-    QString s=QString("select password from user_info where username=%1").arg(username);
+    QString s = QString("select password from user_info where username = '%1'").arg(username);
     QSqlQuery query;
     QString pas;
     query.exec(s);
@@ -54,13 +57,11 @@ QString Login::select(QString username){
              //qDebug()<<pas;
         }
     return pas;
-
 }
 
 void Login::on_loginBtn_clicked()
 {
-    if(ui->userLineEdit->text()!=""&&
-            ui->passwordLineEdit->text()==select(ui->userLineEdit->text())){
+    if(ui->userLineEdit->text() != "" && ui->passwordLineEdit->text() == select(ui->userLineEdit->text())){
         emit toMain();
         QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
         animation->setDuration(2000);
@@ -91,4 +92,28 @@ void Login::on_registerBtn_clicked()
     connect(animation, &QPropertyAnimation::finished, [=] {
         this->hide();
     });
+}
+
+void Login::on_forgetBtn_clicked()
+{
+    emit toForget();
+    QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
+    animation->setDuration(2000);
+    animation->setStartValue(1);
+    animation->setEndValue(0);
+    animation->start();
+    connect(animation, &QPropertyAnimation::finished, [=] {
+        this->hide();
+    });
+}
+
+void Login::showLogin()
+{
+    setWindowOpacity(0);
+    this->show();
+    QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
+    animation->setDuration(2000);
+    animation->setStartValue(0);
+    animation->setEndValue(1);
+    animation->start();
 }

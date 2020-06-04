@@ -20,8 +20,12 @@ public:
 private:
     Ui::Rank *ui;
 
+signals:
+    void toMain();
+
 private slots:
     void showRank();
+    void on_backBtn_clicked();
 };
 
 #endif // RANK_H

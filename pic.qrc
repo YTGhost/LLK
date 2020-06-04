@@ -24,5 +24,7 @@
         <file>pic/pattern/9.png</file>
         <file>pic/background/progress.png</file>
         <file>pic/background/rank.png</file>
+        <file>pic/icon/back-arrow.png</file>
+        <file>pic/icon/back-arrow-focused.png</file>
     </qresource>
 </RCC>
