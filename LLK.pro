@@ -19,26 +19,37 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     choose.cpp \
     databasehelper.cpp \
+    forget.cpp \
     login.cpp \
     main.cpp \
     mainwindow.cpp \
+    music.cpp \
     play.cpp \
+    playworker.cpp \
     rank.cpp \
     register.cpp \
+    smtp.cpp \
     time_thread.cpp
+    playworker.cpp
 
 HEADERS += \
     choose.h \
     databasehelper.h \
+    forget.h \
     login.h \
     mainwindow.h \
+    music.h \
     play.h \
+    playworker.h \
     rank.h \
     register.h \
+    smtp.h \
     time_thread.h
+    playworker.h
 
 FORMS += \
     choose.ui \
+    forget.ui \
     login.ui \
     mainwindow.ui \
     play.ui \

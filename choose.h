@@ -20,6 +20,7 @@ private:
 
 signals:
     void toPlay(int level);
+    void toMain();
 
 private slots:
     void showChoose();
@@ -27,6 +28,7 @@ private slots:
     void on_intermediateBtn_clicked();
     void on_mediumBtn_clicked();
     void on_advancedBtn_clicked();
+    void on_backBtn_clicked();
 };
 
 #endif // CHOOSE_H

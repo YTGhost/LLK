@@ -273,6 +273,24 @@ QPushButton:pressed
     <string>高级</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="backBtn">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>40</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{border-image:url(:/pic/icon/back-arrow.png);}
+QPushButton:hover{border-image:url(:/pic/icon/back-arrow-focused.png);}
+QPushButton:pressed{border-image:url(:/pic/icon/back-arrow-focused.png);}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
