@@ -3,7 +3,7 @@
 
 playworker::playworker(QObject *parent) : QObject(parent)
 {
-
+    times = 3;
 }
 
 void playworker::setDifficulty(int setHb, int setWb, int setFigure)
@@ -384,4 +384,67 @@ void playworker::drawLines(LinkPoints lp)
                 1, 1,
                 Qt::AlignCenter | Qt::AlignHCenter);
     }
+}
+
+void playworker::gameRemind()
+{
+    for(int i=1; i<=hb; i++)
+        for(int j=1; j<=wb; j++)
+        {
+            if(types[i][j]==0)
+                continue;
+
+            for (int k = i; k <= hb; ++k)
+            {
+                int l = 0;
+                if (k > i) l = 1;
+                else l = 1 + j;
+                for (; l <= wb; ++l)
+                {
+                    if(types[k][l]==0)
+                        continue;
+
+                    if(types[i][j]!=types[k][l])
+                        continue;
+
+                    LinkPoints lp;
+                    if(canNoCorner(i, j, k, l, lp)
+                            || canOneCorner(i, j, k, l, lp)
+                            || canTwoCorner(i, j, k, l, lp)) {
+
+                        btns[i][j]->hide();
+                        btns[k][l]->hide();
+
+                        QTest::qWait(100);
+
+                        btns[i][j]->show();
+                        btns[k][l]->show();
+
+                        QTest::qWait(50);
+
+                        btns[i][j]->hide();
+                        btns[k][l]->hide();
+
+                        QTest::qWait(100);
+
+                        btns[i][j]->show();
+                        btns[k][l]->show();
+
+                        drawLines(lp);
+
+                        return ;
+                    }
+                }
+            }
+        }
+}
+
+int playworker::getTimes()
+{
+    return this->times;
+}
+
+void playworker::setTimes(int num)
+{
+    times = num;
 }

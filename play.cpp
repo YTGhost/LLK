@@ -19,7 +19,6 @@ Play::~Play()
 {
     delete ui;
 }
-
 void Play::showPlay(int level)
 {
     if (nullptr == worker)
@@ -143,4 +142,20 @@ void Play::stageClear()
     ui->lcdNumber->display(0);
 
     worker->stageClear();
+}
+
+void Play::on_remind_clicked()
+{
+    int times = worker->getTimes();
+
+    times--;
+    worker->setTimes(times);
+    worker->gameRemind();
+
+    QString text = "提示次数：" + QString::number(times);
+    ui->remind->setText(text);
+
+    if (0 == times) {
+        ui->remind->setEnabled(false);
+    }
 }
