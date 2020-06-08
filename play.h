@@ -45,6 +45,7 @@ private slots:
     void updateLcdNumber(QString value);
     void updateProgressBar(int value);
     void goonPlay();
+    void on_remind_clicked();
 };
 
 #endif // PLAY_H

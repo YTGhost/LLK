@@ -42,6 +42,9 @@ public:
     void drawALine(int lstH, int lstW, int thisH, int thisW, bool isW);
     void drawLines(LinkPoints lp);
 
+    void gameRemind();
+    int getTimes();
+    void setTimes(int num);
 
 signals:
     void updateLcdNumber(QString value);
@@ -53,6 +56,7 @@ public slots:
     void onTimeOut();
 
 private:
+    int times;
 
     int hb, wb;//高多少个格子，宽多少个格子
     int figures;//多少种格子（图片）
