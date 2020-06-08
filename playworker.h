@@ -67,7 +67,7 @@ private:
     QPushButton ***btns;//pushbutton数组
     int **types;//格子的类型的数组。0代表被清理了，1-15格子代表一种格子（图片）
     int remains;//剩余多少个格子
-    int lastClickedH, lastClickedW;//上一个点击的坐标
+    int lastClickedH = 0, lastClickedW = 0;//上一个点击的坐标
 
     QSoundEffect clickSound;//点击音效
     QSoundEffect endsSound;//游戏结束音效

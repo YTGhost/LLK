@@ -25,6 +25,7 @@ public:
     int level;
     time_thread *time;
     int curTime;
+    int isInit = 1;
 
     // test
     //设置游戏场景
