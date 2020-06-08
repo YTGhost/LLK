@@ -24,7 +24,8 @@ int main(int argc, char *argv[])
     c.setWindowTitle(QString::fromLocal8Bit("选择难度"));
     rk.setWindowTitle(QString::fromLocal8Bit("排行榜"));
     f.setWindowTitle(QString::fromLocal8Bit("忘记密码"));
-    l.show();
+   // l.show();
+    c.show();
     // 跳转到下一个页面
     QObject::connect(&l, SIGNAL(toMain()), &w, SLOT(showMain()));
     QObject::connect(&r, SIGNAL(toMain()), &w, SLOT(showMain()));

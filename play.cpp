@@ -168,3 +168,8 @@ void Play::on_remind_clicked()
         ui->remind->setEnabled(false);
     }
 }
+
+void Play::on_pushButton_clicked()
+{
+    worker->remakeMap(ui->gridLayout);
+}

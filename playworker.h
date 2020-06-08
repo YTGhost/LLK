@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QtWidgets>
 #include <QSoundEffect>
+#include <cstring>
 
 class Play;
 class playworker : public QObject
@@ -47,6 +48,9 @@ public:
     void gameRemind();
     int getTimes();
     void setTimes(int num);
+
+    //重新排列
+    void remakeMap(QGridLayout *uiMyGridLayout);
 
 signals:
     void updateLcdNumber(QString value);
