@@ -50,7 +50,11 @@ void Play::showPlay(int level)
     ui->gridLayout->activate();
 
     //清理场景
-    this->stageClear();
+    if(isInit == 1){
+        isInit = 0;
+    }else{
+        this->stageClear();
+    }
 
     //设置场景
     this->setBlocks();

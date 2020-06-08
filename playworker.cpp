@@ -262,16 +262,19 @@ bool playworker::canOneCorner(int lstH, int lstW,
     if(types[lstH][thisW]==0) {
         lp.pt[1][0] = lstH; lp.pt[1][1] = thisW;
         if(canNoCorner(lstH, lstW, lstH, thisW, rubbish)
-                && canNoCorner(lstH, thisW, thisH, thisW, rubbish))
+                && canNoCorner(lstH, thisW, thisH, thisW, rubbish)){
             flag=2;
             return true;
+        }
     }
     if(types[thisH][lstW]==0) {
         lp.pt[1][0] = thisH; lp.pt[1][1] = lstW;
         if(canNoCorner(lstH, lstW, thisH, lstW, rubbish)
-                && canNoCorner(thisH, lstW, thisH, thisW, rubbish))
+                && canNoCorner(thisH, lstW, thisH, thisW, rubbish)){
             flag=2;
             return true;
+        }
+
     }
     return false;
 }
