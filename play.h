@@ -47,6 +47,7 @@ private slots:
     void updateProgressBar(int value);
     void goonPlay();
     void on_remind_clicked();
+    void on_pushButton_clicked();
 };
 
 #endif // PLAY_H

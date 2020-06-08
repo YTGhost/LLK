@@ -468,3 +468,58 @@ void playworker::setTimes(int num)
 {
     times = num;
 }
+
+void playworker::remakeMap(QGridLayout *uiMyGridLayout)
+{
+    int still = remains;
+    int remaining[still];  //用来存放没消掉的blocks
+    memset(remaining, 0, sizeof(remaining));
+    int k = 0;
+
+    //把没消掉的blocks存入数组
+    for(int i=0;i<=hb+1;i++){
+        for(int j=0;j<=wb+1;j++){
+            if(types[i][j]!=0){
+                remaining[k] = types[i][j];
+                k++;
+            }
+        }
+    }
+
+    //将blocks打乱放入另一个数组
+    std::random_shuffle(remaining,remaining+still);
+
+    //将存放的blocks重新放入地图
+    int a = 0;
+    for(int i=0;i<=hb+1;i++){
+        for(int j=0;j<=wb+1;j++){
+            if(types[i][j]!=0){
+                types[i][j] = remaining[a];
+                a++;
+            }
+        }
+    }
+
+    //设置地图
+    for(int i=0; i<=hb+1; i++)
+        for(int j=0; j<=wb+1; j++) {
+            btns[i][j] = new QPushButton;
+            if(i==0 || j==0 || i==hb+1 || j==wb+1) {
+                types[i][j] = 0;
+                btns[i][j]->setIcon(icons[types[i][j]]);
+            }
+            else {
+                btns[i][j]->setIcon(icons[types[i][j]]);
+                connect(btns[i][j], SIGNAL(clicked()),
+                        this, SLOT(btnsClicked()));
+            }
+            btns[i][j]->setMinimumWidth(60);
+            btns[i][j]->setMinimumHeight(60);
+            btns[i][j]->setMaximumWidth(60);
+            btns[i][j]->setMaximumHeight(60);
+            btns[i][j]->setIconSize(QSize(60,60));
+            uiMyGridLayout->addWidget(btns[i][j],
+                                      i, j, 1, 1,
+                                      Qt::AlignCenter | Qt::AlignHCenter);
+        }
+}
