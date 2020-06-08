@@ -1,4 +1,4 @@
-#include "playworker.h"
+﻿#include "playworker.h"
 #include "play.h"
 
 playworker::playworker(QObject *parent) : QObject(parent)
@@ -165,6 +165,15 @@ void playworker::btnsClicked() {
 
         //点击音效
         clickSound.play();
+        if(flag==1){
+            score=score+1;
+        }
+        if(flag==2){
+            score=score+2;
+        }
+        if(flag==3){
+            score=score+3;
+        }
 
         //画线连接两张图片
         drawLines(lp);
@@ -227,6 +236,7 @@ bool playworker::canNoCorner(int lstH, int lstW,
         for(int i=minH+1; i<=maxH-1; i++)
             if(types[i][lstW])
                 return false;
+        flag=1;
         return true;
     }
     else if (lstH==thisH) {
@@ -235,6 +245,7 @@ bool playworker::canNoCorner(int lstH, int lstW,
         for(int i=minW+1; i<=maxW-1; i++)
             if(types[lstH][i])
                 return false;
+        flag=1;
         return true;
     }
     return false;
@@ -252,12 +263,14 @@ bool playworker::canOneCorner(int lstH, int lstW,
         lp.pt[1][0] = lstH; lp.pt[1][1] = thisW;
         if(canNoCorner(lstH, lstW, lstH, thisW, rubbish)
                 && canNoCorner(lstH, thisW, thisH, thisW, rubbish))
+            flag=2;
             return true;
     }
     if(types[thisH][lstW]==0) {
         lp.pt[1][0] = thisH; lp.pt[1][1] = lstW;
         if(canNoCorner(lstH, lstW, thisH, lstW, rubbish)
                 && canNoCorner(thisH, lstW, thisH, thisW, rubbish))
+            flag=2;
             return true;
     }
     return false;
@@ -277,6 +290,7 @@ bool playworker::canTwoCorner(int lstH, int lstW,
                 && canOneCorner(i, lstW, thisH, thisW, rubbish)) {
             lp.pt[1][0] = i; lp.pt[1][1] = lstW;
             lp.pt[2][0] = i; lp.pt[2][1] = thisW;
+            flag=3;
             return true;
         }
 
@@ -286,6 +300,7 @@ bool playworker::canTwoCorner(int lstH, int lstW,
                 && canNoCorner(i, thisW, thisH, thisW, rubbish)) {
             lp.pt[1][0] = i; lp.pt[1][1] = thisW;
             lp.pt[2][0] = i; lp.pt[2][1] = lstW;
+            flag=3;
             return true;
         }
     }
@@ -296,6 +311,7 @@ bool playworker::canTwoCorner(int lstH, int lstW,
                 && canOneCorner(lstH, i, thisH, thisW, rubbish)) {
             lp.pt[1][0] = lstH; lp.pt[1][1] = i;
             lp.pt[2][0] = thisH; lp.pt[2][1] = i;
+            flag=3;
             return true;
         }
         if(i!=thisW && i!=lstW
@@ -304,6 +320,7 @@ bool playworker::canTwoCorner(int lstH, int lstW,
                 && canNoCorner(thisH, i, thisH, thisW, rubbish)) {
             lp.pt[1][0] = thisH; lp.pt[1][1] = i;
             lp.pt[2][0] = lstH; lp.pt[2][1] = i;
+            flag=3;
             return true;
         }
     }

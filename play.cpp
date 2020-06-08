@@ -1,4 +1,4 @@
-#include "play.h"
+﻿#include "play.h"
 #include "ui_play.h"
 #include <QPropertyAnimation>
 #include <QMessageBox>
@@ -83,6 +83,11 @@ void Play::updateTime(int time)
 void Play::updateLcdNumber(QString value)
 {
     ui->lcdNumber->display(value);
+    ui->lcdNumber_2->display(QString::number(worker->score));
+    if(worker->flag!=0){
+        getPoint();
+    }
+    worker->flag=0;
 }
 
 void Play::updateProgressBar(int value)
