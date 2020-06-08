@@ -1,4 +1,4 @@
-#ifndef PLAYWORKER_H
+﻿#ifndef PLAYWORKER_H
 #define PLAYWORKER_H
 
 #include <QObject>
@@ -10,6 +10,8 @@ class playworker : public QObject
 {
     Q_OBJECT
 public:
+    int flag=0;
+    int score=0;//记录游戏分数
     explicit playworker(QObject *parent = nullptr);
 
     //点击两个配对点后，配对点和中间端点构成的结构体
