@@ -153,7 +153,7 @@ void Register::on_sendcodeBtn_clicked()
 
     if(email!=""){  //如果填入了正确邮箱
 
-        //从数据库中查找是否存在邮箱
+        // 从数据库中查找是否存在邮箱
         QString s = QString("select email from user_info");
         QSqlQuery query;
         QString pas;
@@ -163,6 +163,16 @@ void Register::on_sendcodeBtn_clicked()
             pas=query.value(0).toString() ;
             if(email==pas){   //如果存在
                 ui->emailLineEdit->setText(QString::fromLocal8Bit("此邮箱已存在！"));
+                return;
+            }
+        }
+        // 从数据库中查找是否存在用户名
+        QString ss = QString("select username from user_info");
+        query.exec(ss);
+        while(query.next())
+        {
+            if(username == query.value(0).toString()){
+                ui->userLineEdit->setText(QString::fromLocal8Bit("该用户名已存在！"));
                 return;
             }
         }

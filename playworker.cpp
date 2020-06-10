@@ -34,6 +34,7 @@ void playworker::initSounds()
 {
     clickSound.setSource(QUrl::fromLocalFile(":/sounds/clicks.wav"));
     endsSound.setSource(QUrl::fromLocalFile(":/sounds/ends.wav"));
+    failSound.setSource(QUrl::fromLocalFile(":/sounds/fail.wav"));
 }
 
 void playworker::stageClear()
@@ -196,11 +197,18 @@ void playworker::btnsClicked() {
         remains -= 2;
         emit updateProgressBar((100*(hb*wb-remains)/(hb*wb)));
 
+        // 无解的话提示玩家重置
+        if(!gameCheck()){
+            emit toHint(1);
+        }else{
+            emit toHint(0);
+        }
+
         //结束了，要不要继续玩
         if (remains<=0) {
             pTimer->stop();
             endsSound.play();
-            emit goonPlay();
+            emit goonPlay(score);
         }
     }
     else {
@@ -409,6 +417,8 @@ void playworker::drawLines(LinkPoints lp)
 void playworker::gameRemind()
 {
     for(int i=1; i<=hb; i++)
+    {
+
         for(int j=1; j<=wb; j++)
         {
             if(types[i][j]==0)
@@ -452,11 +462,106 @@ void playworker::gameRemind()
 
                         drawLines(lp);
 
-                        return ;
+                        return;
                     }
                 }
             }
         }
+    }
+}
+
+int playworker::gameCheck()
+{
+    for(int i=1; i<=hb; i++)
+    {
+
+        for(int j=1; j<=wb; j++)
+        {
+            if(types[i][j]==0)
+                continue;
+
+            for (int k = i; k <= hb; ++k)
+            {
+                int l = 0;
+                if (k > i) l = 1;
+                else l = 1 + j;
+                for (; l <= wb; ++l)
+                {
+                    if(types[k][l]==0)
+                        continue;
+
+                    if(types[i][j]!=types[k][l])
+                        continue;
+
+                    LinkPoints lp;
+                    if(canNoCorner(i, j, k, l, lp)
+                            || canOneCorner(i, j, k, l, lp)
+                            || canTwoCorner(i, j, k, l, lp)) {
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+vector<int> playworker::gameRemind2(LinkPoints &lpp)
+{
+    for(int i=1; i<=hb; i++)
+    {
+
+        for(int j=1; j<=wb; j++)
+        {
+            if(types[i][j]==0)
+                continue;
+
+            for (int k = i; k <= hb; ++k)
+            {
+                int l = 0;
+                if (k > i) l = 1;
+                else l = 1 + j;
+                for (; l <= wb; ++l)
+                {
+                    if(types[k][l]==0)
+                        continue;
+
+                    if(types[i][j]!=types[k][l])
+                        continue;
+
+                    LinkPoints lp;
+                    if(canNoCorner(i, j, k, l, lp)
+                            || canOneCorner(i, j, k, l, lp)
+                            || canTwoCorner(i, j, k, l, lp)) {
+
+                        btns[i][j]->hide();
+                        btns[k][l]->hide();
+
+                        QTest::qWait(100);
+
+                        btns[i][j]->show();
+                        btns[k][l]->show();
+
+                        QTest::qWait(50);
+
+                        btns[i][j]->hide();
+                        btns[k][l]->hide();
+
+                        QTest::qWait(100);
+
+                        btns[i][j]->show();
+                        btns[k][l]->show();
+
+                        drawLines(lp);
+
+                        lpp = lp;
+                        return vector<int>{i, j, k, l};
+                    }
+                }
+            }
+        }
+    }
+    return vector<int>{};
 }
 
 int playworker::getTimes()
@@ -522,4 +627,81 @@ void playworker::remakeMap(QGridLayout *uiMyGridLayout)
                                       i, j, 1, 1,
                                       Qt::AlignCenter | Qt::AlignHCenter);
         }
+}
+
+void playworker::autoSolve()
+{   
+    // 若开始自动解题时没有解，重置到有解
+    if(!gameCheck()){
+        while(!gameCheck()){
+            remakeMap(m_uiGridLayout);
+        }
+    }
+
+    while(1)
+    {
+        LinkPoints lp;
+        vector<int> t = gameRemind2(lp);
+        int lastClickedH = t[0];
+        int lastClickedW = t[1];
+        int thisH = t[2];
+        int thisW = t[3];
+        if(t.size() != 0){
+            //点击音效
+            clickSound.play();
+            if(flag==1){
+                score=score+1;
+            }
+            if(flag==2){
+                score=score+2;
+            }
+            if(flag==3){
+                score=score+3;
+            }
+
+            //画线连接两张图片
+            drawLines(lp);
+
+            //设置两张图片为被点击了
+            types[lastClickedH][lastClickedW] = types[thisH][thisW] = 0;
+            btns[thisH][thisW]->setIcon(icons[0]);
+            m_uiGridLayout->addWidget(btns[thisH][thisW],
+                                      thisH, thisW, 1, 1,
+                                      Qt::AlignCenter | Qt::AlignHCenter);
+            btns[lastClickedH][lastClickedW]->setIcon(icons[0]);
+            m_uiGridLayout->addWidget(btns[lastClickedH][lastClickedW],
+                                      lastClickedH, lastClickedW, 1, 1,
+                                      Qt::AlignCenter | Qt::AlignHCenter);
+
+            //重置点击按钮
+            lastClickedH = lastClickedW = 0;
+
+            //修改进度
+            remains -= 2;
+            emit updateProgressBar((100*(hb*wb-remains)/(hb*wb)));
+
+            //结束了，要不要继续玩
+            if (remains<=0) {
+                pTimer->stop();
+                endsSound.play();
+                emit goonPlay(score);
+                return;
+            }
+            // 消完一对后若没有解，重置到有解的状态
+            if(!gameCheck()){
+                while(!gameCheck()){
+                    remakeMap(m_uiGridLayout);
+                }
+            }
+        }
+    }
+}
+
+void playworker::fail()
+{
+    pTimer->stop();
+    // 失败音乐
+    failSound.play();
+    emit goonPlay(score);
+    return;
 }

@@ -62,6 +62,7 @@ QString Login::select(QString username){
 void Login::on_loginBtn_clicked()
 {
     if(ui->userLineEdit->text() != "" && ui->passwordLineEdit->text() == select(ui->userLineEdit->text())){
+        emit sendInfo(ui->userLineEdit->text());
         emit toMain();
         QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
         animation->setDuration(2000);
