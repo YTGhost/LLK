@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QVideoWidget>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -28,5 +31,13 @@ private slots:
     void on_playBtn_clicked();
     void on_rankBtn_clicked();
     void on_backBtn_clicked();
+
+    void on_musicSlider_sliderMoved(int position);
+
+public:
+    QMediaPlaylist* musicPlayerList;
+    QMediaPlayer* musicPlayer;
+    QVideoWidget *videoWidget;
+
 };
 #endif // MAINWINDOW_H
