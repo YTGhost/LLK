@@ -19,7 +19,5 @@
         <file>images/line.jpg</file>
         <file>images/myico.ico</file>
         <file>images/turn.jpg</file>
-        <file>sounds/clicks.wav</file>
-        <file>sounds/ends.wav</file>
     </qresource>
 </RCC>

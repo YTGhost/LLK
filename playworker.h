@@ -5,14 +5,19 @@
 #include <QtWidgets>
 #include <QSoundEffect>
 #include <cstring>
+#include <vector>
+using namespace std;
 
 class Play;
 class playworker : public QObject
 {
     Q_OBJECT
 public:
+    int times;
     int flag=0;
     int score=0;//记录游戏分数
+    QTimer *pTimer;//定时器
+    QTime *pTime;//计时器
     explicit playworker(QObject *parent = nullptr);
 
     //点击两个配对点后，配对点和中间端点构成的结构体
@@ -49,21 +54,27 @@ public:
     int getTimes();
     void setTimes(int num);
 
-    //重新排列
+    // 自动解题
+    vector<int> gameRemind2(LinkPoints &lp);
+    void autoSolve();
+    // 检查是否有解
+    int gameCheck();
+
+    // 重新排列
     void remakeMap(QGridLayout *uiMyGridLayout);
 
 signals:
     void updateLcdNumber(QString value);
     void updateProgressBar(int value);
-    void goonPlay();
+    void goonPlay(int score);
+    void toHint(int sign);
 
 public slots:
     void btnsClicked();
     void onTimeOut();
+    void fail();
 
 private:
-    int times;
-
     int hb, wb;//高多少个格子，宽多少个格子
     int figures;//多少种格子（图片）
     QPixmap icons[16];//图片数组
@@ -75,9 +86,7 @@ private:
 
     QSoundEffect clickSound;//点击音效
     QSoundEffect endsSound;//游戏结束音效
-
-    QTimer *pTimer;//定时器
-    QTime *pTime;//计时器
+    QSoundEffect failSound;//失败音效
 
     bool isStarted;//游戏开始了吗
 

@@ -7,7 +7,6 @@ Rank::Rank(QWidget *parent) :
     ui(new Ui::Rank)
 {
     ui->setupUi(this);
-    select();
 }
 
 Rank::~Rank()
@@ -18,6 +17,7 @@ Rank::~Rank()
 
 void Rank::showRank()
 {
+    select();
     setWindowOpacity(0);
     this->show();
     QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
@@ -28,39 +28,22 @@ void Rank::showRank()
 }
 
 void Rank::select(){
-    QString s=QString("select * from rank ");
+    list.clear();
+    QString str = QString("select * from rank");
     QSqlQuery query;
-    int score[10],i=1,k=1;
-    query.exec(s);
-    while (query.next())
-        {
-             score[i]=query.value(2).toInt();
-             //qDebug()<<score[i];
-             i++;
-        }
-    while(k<i){
-        int temp=0;
-        int count=0;
-        for(int j=1;j<i;j++){
-            if(temp<score[j]){
-                temp=score[j];
-                count=j;
-            }
-        }
-
-        QString s=QString("select username from rank where id=%1").arg(count);
-        QSqlQuery query;
-        query.exec(s);
-        QString name;
-        while (query.next())
-            {
-                 name=query.value(0).toString();
-                 ui->textBrowser->insertPlainText("\t"+QString::number(k)+"\t\t"+name+"\t\t"+QString::number(temp)+"\n");
-            }
-        score[count]=0;
-        k++;
+    query.exec(str);
+    while(query.next())
+    {
+        list.push_back(make_pair(query.value(1).toString(), query.value(2).toInt()));
     }
-
+    sort(list.begin(), list.end(), [](pair<QString, int> a, pair<QString, int> b)
+    {
+        return a.second > b.second;
+    });
+    for(int i = 0; i < list.size(); i++)
+    {
+        ui->textBrowser->insertPlainText("\t"+QString::number(i+1)+"\t\t"+list[i].first+"\t\t"+QString::number(list[i].second)+"\n");
+    }
 }
 
 void Rank::on_backBtn_clicked()
