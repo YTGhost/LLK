@@ -17,7 +17,7 @@ void playworker::initImages()
 {
     types = nullptr;
     btns = nullptr;
-    for(int i=0; i<=16; i++)
+    for(int i=0; i<=15; i++)
         icons[i].load(QString::asprintf(":/images/%d.jpg", i));
     imageLine[0].load(":/images/line.jpg");
     QMatrix matrix;

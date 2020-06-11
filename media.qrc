@@ -4,5 +4,6 @@
         <file>sounds/clicks.wav</file>
         <file>sounds/ends.wav</file>
         <file>sounds/fail.wav</file>
+        <file>media/background.mp3</file>
     </qresource>
 </RCC>

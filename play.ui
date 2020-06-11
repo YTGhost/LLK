@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
-    <height>800</height>
+    <width>1159</width>
+    <height>814</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QProgressBar" name="timeBar">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>30</x>
      <y>30</y>
      <width>381</width>
      <height>21</height>
@@ -29,7 +29,7 @@
   <widget class="QPushButton" name="pauseBtn">
    <property name="geometry">
     <rect>
-     <x>550</x>
+     <x>420</x>
      <y>20</y>
      <width>91</width>
      <height>51</height>
@@ -44,7 +44,7 @@
     <rect>
      <x>30</x>
      <y>70</y>
-     <width>1028</width>
+     <width>1081</width>
      <height>100</height>
     </rect>
    </property>
@@ -93,8 +93,20 @@
       </item>
       <item>
        <widget class="QPushButton" name="resetBtn">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>28</height>
+         </size>
+        </property>
         <property name="text">
          <string>重置</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -153,8 +165,8 @@
     <rect>
      <x>40</x>
      <y>180</y>
-     <width>1028</width>
-     <height>527</height>
+     <width>1071</width>
+     <height>591</height>
     </rect>
    </property>
    <property name="title">
@@ -229,7 +241,7 @@
   <widget class="QPushButton" name="remind">
    <property name="geometry">
     <rect>
-     <x>670</x>
+     <x>620</x>
      <y>20</y>
      <width>91</width>
      <height>51</height>
@@ -242,7 +254,7 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>790</x>
+     <x>720</x>
      <y>20</y>
      <width>63</width>
      <height>57</height>
@@ -260,10 +272,10 @@
   <widget class="QLCDNumber" name="lcdNumber_2">
    <property name="geometry">
     <rect>
-     <x>900</x>
-     <y>20</y>
+     <x>800</x>
+     <y>10</y>
      <width>300</width>
-     <height>57</height>
+     <height>61</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -284,26 +296,13 @@
     <enum>QLCDNumber::Flat</enum>
    </property>
   </widget>
-  <widget class="QPushButton" name="solveBtn">
-   <property name="geometry">
-    <rect>
-     <x>440</x>
-     <y>20</y>
-     <width>101</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>自动解题</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
      <x>40</x>
      <y>200</y>
-     <width>1031</width>
-     <height>511</height>
+     <width>1071</width>
+     <height>571</height>
     </rect>
    </property>
    <property name="font">
@@ -337,6 +336,19 @@ QPushButton:pressed{border-image:url(:/pic/icon/back-arrow-focused.png);}</strin
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="solveBtn">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>20</y>
+     <width>93</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>自动解题</string>
    </property>
   </widget>
  </widget>
