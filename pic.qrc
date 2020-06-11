@@ -28,5 +28,13 @@
         <file>pic/icon/back-arrow-focused.png</file>
         <file>pic/background/background2.jpg</file>
         <file>pic/background/rank2.jpg</file>
+        <file>pic/pattern/11.png</file>
+        <file>pic/pattern/12.png</file>
+        <file>pic/pattern/13.png</file>
+        <file>pic/pattern/14.png</file>
+        <file>pic/pattern/15.png</file>
+        <file>pic/pattern/line.jpg</file>
+        <file>pic/pattern/turn.jpg</file>
+        <file>pic/pattern/0.png</file>
     </qresource>
 </RCC>

@@ -18,13 +18,13 @@ void playworker::initImages()
     types = nullptr;
     btns = nullptr;
     for(int i=0; i<=15; i++)
-        icons[i].load(QString::asprintf(":/images/%d.jpg", i));
-    imageLine[0].load(":/images/line.jpg");
+        icons[i].load(QString::asprintf(":/pic/pattern/%d.png", i));
+    imageLine[0].load(":/pic/pattern/line.jpg");
     QMatrix matrix;
     matrix.rotate(90.0);
     imageLine[1] = imageLine[0].transformed(matrix,
                                             Qt::FastTransformation);
-    imageTurn[0].load(":/images/turn.jpg");
+    imageTurn[0].load(":/pic/pattern/turn.jpg");
     for(int i=1; i<=3; i++)
         imageTurn[i] = imageTurn[i-1].transformed(matrix,
                                                   Qt::FastTransformation);
@@ -208,7 +208,7 @@ void playworker::btnsClicked() {
         if (remains<=0) {
             pTimer->stop();
             endsSound.play();
-            emit goonPlay(score);
+            emit goonPlay(score, 1);
         }
     }
     else {
@@ -649,15 +649,6 @@ void playworker::autoSolve()
         if(t.size() != 0){
             //点击音效
             clickSound.play();
-            if(flag==1){
-                score=score+1;
-            }
-            if(flag==2){
-                score=score+2;
-            }
-            if(flag==3){
-                score=score+3;
-            }
 
             //画线连接两张图片
             drawLines(lp);
@@ -684,7 +675,7 @@ void playworker::autoSolve()
             if (remains<=0) {
                 pTimer->stop();
                 endsSound.play();
-                emit goonPlay(score);
+                emit goonPlay(score, 1);
                 return;
             }
             // 消完一对后若没有解，重置到有解的状态
@@ -702,6 +693,6 @@ void playworker::fail()
     pTimer->stop();
     // 失败音乐
     failSound.play();
-    emit goonPlay(score);
+    emit goonPlay(score, 0);
     return;
 }

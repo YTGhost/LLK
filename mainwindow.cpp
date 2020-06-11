@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     musicPlayer->setVideoOutput(videoWidget);
     musicPlayerList->addMedia(QUrl("qrc:/media/background.mp3"));
+    musicPlayerList->setCurrentIndex(0);
     musicPlayer->setPlaylist(musicPlayerList);
     musicPlayer->setVolume(ui->musicSlider->value());
     musicPlayer->play();

@@ -13,7 +13,7 @@ Play::Play(QWidget *parent) :
     ui->label->hide();
     connect(worker, &playworker::updateLcdNumber, this, &Play::updateLcdNumber);
     connect(worker, &playworker::updateProgressBar, this, &Play::updateProgressBar);
-    connect(worker, SIGNAL(goonPlay(int)), this, SLOT(goonPlay(int)));
+    connect(worker, SIGNAL(goonPlay(int, int)), this, SLOT(goonPlay(int, int)));
     connect(worker, SIGNAL(toHint(int)), this, SLOT(getHint(int)));
 }
 
@@ -46,6 +46,8 @@ void Play::showPlay(int level)
     //初始化图片、音效
     worker->initImages();
     worker->initSounds();
+    worker->flag = 0;
+    worker->score = 0;
 
     //设置grid布局
     ui->gridLayout->setHorizontalSpacing(1);
@@ -154,7 +156,7 @@ void Play::updateProgressBar(int value)
     ui->progressBar->setStyleSheet(qss);
 }
 
-void Play::goonPlay(int score)
+void Play::goonPlay(int score, int sign)
 {
     QString str = QString("select * from rank where username = '%1'").arg(username);
     QSqlQuery query;
@@ -172,11 +174,26 @@ void Play::goonPlay(int score)
         query.exec(str);
     }
 
-    QMessageBox::StandardButton result =
-            QMessageBox::question(this, QString("完成"),
-                          QString("完成！\n再来一局？"),
-                          QMessageBox::Yes | QMessageBox::No,
-                          QMessageBox::NoButton);
+    QMessageBox::StandardButton result;
+    time->terminate();
+    // 过关
+    if(sign == 1){
+        result = QMessageBox::question(this, QString("完成"),
+                                       QString("完成！\n再来一局？"),
+                                       QMessageBox::Yes | QMessageBox::No,
+                                       QMessageBox::NoButton);
+    }else{ // 未过关
+        result = QMessageBox::question(this, QString("失败"),
+                                       QString("失败！\n再来一局？"),
+                                       QMessageBox::Yes | QMessageBox::No,
+                                       QMessageBox::NoButton);
+    }
+    // 初始化按钮
+    ui->backBtn->setEnabled(true);
+    ui->remind->setEnabled(true);
+    ui->pauseBtn->setEnabled(true);
+    ui->resetBtn->setEnabled(true);
+    ui->solveBtn->setEnabled(true);
     // 再玩一局
     if(result==QMessageBox::Yes)
     {
@@ -242,6 +259,7 @@ void Play::stageClear()
 {
     ui->progressBar->setValue(0);
     ui->lcdNumber->display(0);
+    ui->lcdNumber_2->display(0);
 
     worker->stageClear();
 }
@@ -283,11 +301,12 @@ void Play::on_resetBtn_clicked()
 
 void Play::on_solveBtn_clicked()
 {
-    // 开始自动解题前，禁用返回选择难度，提示，暂停，重置按钮
+    // 开始自动解题前，禁用返回选择难度，提示，暂停，重置按钮和自身
     ui->backBtn->setEnabled(false);
     ui->remind->setEnabled(false);
     ui->pauseBtn->setEnabled(false);
     ui->resetBtn->setEnabled(false);
+    ui->solveBtn->setEnabled(false);
     worker->autoSolve();
 }
 

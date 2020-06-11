@@ -14,8 +14,8 @@ class playworker : public QObject
     Q_OBJECT
 public:
     int times;
-    int flag=0;
-    int score=0;//记录游戏分数
+    int flag;
+    int score;//记录游戏分数
     QTimer *pTimer;//定时器
     QTime *pTime;//计时器
     explicit playworker(QObject *parent = nullptr);
@@ -66,7 +66,7 @@ public:
 signals:
     void updateLcdNumber(QString value);
     void updateProgressBar(int value);
-    void goonPlay(int score);
+    void goonPlay(int score, int sign);
     void toHint(int sign);
 
 public slots:

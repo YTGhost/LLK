@@ -53,7 +53,7 @@ private slots:
     void updateTime(int time);
     void updateLcdNumber(QString value);
     void updateProgressBar(int value);
-    void goonPlay(int score);
+    void goonPlay(int score, int sign);
     void on_remind_clicked();
     void getInfo(QString);
     void on_resetBtn_clicked();

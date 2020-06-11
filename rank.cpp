@@ -29,6 +29,7 @@ void Rank::showRank()
 
 void Rank::select(){
     list.clear();
+    ui->textBrowser->clear();
     QString str = QString("select * from rank");
     QSqlQuery query;
     query.exec(str);
