@@ -26,5 +26,7 @@
         <file>pic/background/rank.png</file>
         <file>pic/icon/back-arrow.png</file>
         <file>pic/icon/back-arrow-focused.png</file>
+        <file>pic/background/background2.jpg</file>
+        <file>pic/background/rank2.jpg</file>
     </qresource>
 </RCC>

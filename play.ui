@@ -13,6 +13,11 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#Play{
+	border-image: url(:/pic/background/background2.jpg);
+}</string>
+  </property>
   <widget class="QProgressBar" name="timeBar">
    <property name="geometry">
     <rect>
