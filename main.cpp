@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
     rk.setWindowTitle(QString::fromLocal8Bit("排行榜"));
     f.setWindowTitle(QString::fromLocal8Bit("忘记密码"));
     l.show();
+//    c.show();
     // 跳转到下一个页面
     QObject::connect(&l, SIGNAL(toMain()), &w, SLOT(showMain()));
     QObject::connect(&r, SIGNAL(toMain()), &w, SLOT(showMain()));
@@ -40,5 +41,9 @@ int main(int argc, char *argv[])
     QObject::connect(&w, SIGNAL(toLogin()), &l, SLOT(showLogin()));
     QObject::connect(&c, SIGNAL(toMain()), &w, SLOT(showMain()));
     QObject::connect(&rk, SIGNAL(toMain()), &w, SLOT(showMain()));
+    QObject::connect(&p, SIGNAL(returnChoose()), &c, SLOT(showChoose()));
+
+    QObject::connect(&l, SIGNAL(sendInfo(QString)), &p, SLOT(getInfo(QString)));
+
     return a.exec();
 }

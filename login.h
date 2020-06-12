@@ -26,6 +26,7 @@ signals:
     void toMain();  // 跳转mainwindow的信号（发送到mainwindow）
     void toRegister();  // 跳转到register的信号(发送到register)
     void toForget();    // 跳转到forget的信号(发送到forget)
+    void sendInfo(QString);    // 发送登录的用户名到Play类
 private slots:
     void on_loginBtn_clicked();
     void on_registerBtn_clicked();

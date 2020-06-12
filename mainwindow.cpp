@@ -7,6 +7,19 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    musicPlayerList = new QMediaPlaylist;
+    musicPlayerList->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
+
+    videoWidget = new QVideoWidget();
+    musicPlayer = new QMediaPlayer(this);
+
+    musicPlayer->setVideoOutput(videoWidget);
+    musicPlayerList->addMedia(QUrl("qrc:/media/background.mp3"));
+    musicPlayerList->setCurrentIndex(0);
+    musicPlayer->setPlaylist(musicPlayerList);
+    musicPlayer->setVolume(ui->musicSlider->value());
+    musicPlayer->play();
 }
 
 MainWindow::~MainWindow()
@@ -63,3 +76,9 @@ void MainWindow::on_backBtn_clicked()
         this->hide();
     });
 }
+
+void MainWindow::on_musicSlider_sliderMoved(int position)
+{
+    musicPlayer->setVolume(position);
+}
+

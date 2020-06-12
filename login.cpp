@@ -13,7 +13,7 @@ Login::Login(QWidget *parent) :
     helper = new databasehelper();
 
     // 播放背景音乐
-    music = new Music();
+//    music = new Music();
 
     // 设置GUI样式
     QString dialogQSS = "QDialog {background:qlineargradient(spread:pad,x1:1,y1:0,x2:0,y2:0,stop:0 #c31399,stop:1 #9118fd)}";
@@ -62,6 +62,7 @@ QString Login::select(QString username){
 void Login::on_loginBtn_clicked()
 {
     if(ui->userLineEdit->text() != "" && ui->passwordLineEdit->text() == select(ui->userLineEdit->text())){
+        emit sendInfo(ui->userLineEdit->text());
         emit toMain();
         QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
         animation->setDuration(2000);

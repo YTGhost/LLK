@@ -2,8 +2,10 @@
 #define RANK_H
 
 #include <QDialog>
-#include<QSqlQuery>
-#include<qdebug.h>
+#include <QSqlQuery>
+#include <qdebug.h>
+#include <vector>
+using namespace std;
 namespace Ui {
 class Rank;
 }
@@ -16,6 +18,7 @@ public:
     explicit Rank(QWidget *parent = nullptr);
     ~Rank();
     void select();
+    vector<pair<QString, int>> list;
 
 private:
     Ui::Rank *ui;

@@ -1,9 +1,9 @@
-#include "playworker.h"
+﻿#include "playworker.h"
 #include "play.h"
 
 playworker::playworker(QObject *parent) : QObject(parent)
 {
-
+    times = 3;
 }
 
 void playworker::setDifficulty(int setHb, int setWb, int setFigure)
@@ -17,14 +17,14 @@ void playworker::initImages()
 {
     types = nullptr;
     btns = nullptr;
-    for(int i=0; i<=16; i++)
-        icons[i].load(QString::asprintf(":/images/%d.jpg", i));
-    imageLine[0].load(":/images/line.jpg");
+    for(int i=0; i<=15; i++)
+        icons[i].load(QString::asprintf(":/pic/pattern/%d.png", i));
+    imageLine[0].load(":/pic/pattern/line.jpg");
     QMatrix matrix;
     matrix.rotate(90.0);
     imageLine[1] = imageLine[0].transformed(matrix,
                                             Qt::FastTransformation);
-    imageTurn[0].load(":/images/turn.jpg");
+    imageTurn[0].load(":/pic/pattern/turn.jpg");
     for(int i=1; i<=3; i++)
         imageTurn[i] = imageTurn[i-1].transformed(matrix,
                                                   Qt::FastTransformation);
@@ -34,6 +34,7 @@ void playworker::initSounds()
 {
     clickSound.setSource(QUrl::fromLocalFile(":/sounds/clicks.wav"));
     endsSound.setSource(QUrl::fromLocalFile(":/sounds/ends.wav"));
+    failSound.setSource(QUrl::fromLocalFile(":/sounds/fail.wav"));
 }
 
 void playworker::stageClear()
@@ -165,6 +166,15 @@ void playworker::btnsClicked() {
 
         //点击音效
         clickSound.play();
+        if(flag==1){
+            score=score+1;
+        }
+        if(flag==2){
+            score=score+2;
+        }
+        if(flag==3){
+            score=score+3;
+        }
 
         //画线连接两张图片
         drawLines(lp);
@@ -187,11 +197,18 @@ void playworker::btnsClicked() {
         remains -= 2;
         emit updateProgressBar((100*(hb*wb-remains)/(hb*wb)));
 
+        // 无解的话提示玩家重置
+        if(!gameCheck()){
+            emit toHint(1);
+        }else{
+            emit toHint(0);
+        }
+
         //结束了，要不要继续玩
         if (remains<=0) {
             pTimer->stop();
             endsSound.play();
-            emit goonPlay();
+            emit goonPlay(score, 1);
         }
     }
     else {
@@ -227,6 +244,7 @@ bool playworker::canNoCorner(int lstH, int lstW,
         for(int i=minH+1; i<=maxH-1; i++)
             if(types[i][lstW])
                 return false;
+        flag=1;
         return true;
     }
     else if (lstH==thisH) {
@@ -235,6 +253,7 @@ bool playworker::canNoCorner(int lstH, int lstW,
         for(int i=minW+1; i<=maxW-1; i++)
             if(types[lstH][i])
                 return false;
+        flag=1;
         return true;
     }
     return false;
@@ -251,14 +270,19 @@ bool playworker::canOneCorner(int lstH, int lstW,
     if(types[lstH][thisW]==0) {
         lp.pt[1][0] = lstH; lp.pt[1][1] = thisW;
         if(canNoCorner(lstH, lstW, lstH, thisW, rubbish)
-                && canNoCorner(lstH, thisW, thisH, thisW, rubbish))
+                && canNoCorner(lstH, thisW, thisH, thisW, rubbish)){
+            flag=2;
             return true;
+        }
     }
     if(types[thisH][lstW]==0) {
         lp.pt[1][0] = thisH; lp.pt[1][1] = lstW;
         if(canNoCorner(lstH, lstW, thisH, lstW, rubbish)
-                && canNoCorner(thisH, lstW, thisH, thisW, rubbish))
+                && canNoCorner(thisH, lstW, thisH, thisW, rubbish)){
+            flag=2;
             return true;
+        }
+
     }
     return false;
 }
@@ -277,6 +301,7 @@ bool playworker::canTwoCorner(int lstH, int lstW,
                 && canOneCorner(i, lstW, thisH, thisW, rubbish)) {
             lp.pt[1][0] = i; lp.pt[1][1] = lstW;
             lp.pt[2][0] = i; lp.pt[2][1] = thisW;
+            flag=3;
             return true;
         }
 
@@ -286,6 +311,7 @@ bool playworker::canTwoCorner(int lstH, int lstW,
                 && canNoCorner(i, thisW, thisH, thisW, rubbish)) {
             lp.pt[1][0] = i; lp.pt[1][1] = thisW;
             lp.pt[2][0] = i; lp.pt[2][1] = lstW;
+            flag=3;
             return true;
         }
     }
@@ -296,6 +322,7 @@ bool playworker::canTwoCorner(int lstH, int lstW,
                 && canOneCorner(lstH, i, thisH, thisW, rubbish)) {
             lp.pt[1][0] = lstH; lp.pt[1][1] = i;
             lp.pt[2][0] = thisH; lp.pt[2][1] = i;
+            flag=3;
             return true;
         }
         if(i!=thisW && i!=lstW
@@ -304,6 +331,7 @@ bool playworker::canTwoCorner(int lstH, int lstW,
                 && canNoCorner(thisH, i, thisH, thisW, rubbish)) {
             lp.pt[1][0] = thisH; lp.pt[1][1] = i;
             lp.pt[2][0] = lstH; lp.pt[2][1] = i;
+            flag=3;
             return true;
         }
     }
@@ -384,4 +412,287 @@ void playworker::drawLines(LinkPoints lp)
                 1, 1,
                 Qt::AlignCenter | Qt::AlignHCenter);
     }
+}
+
+void playworker::gameRemind()
+{
+    for(int i=1; i<=hb; i++)
+    {
+
+        for(int j=1; j<=wb; j++)
+        {
+            if(types[i][j]==0)
+                continue;
+
+            for (int k = i; k <= hb; ++k)
+            {
+                int l = 0;
+                if (k > i) l = 1;
+                else l = 1 + j;
+                for (; l <= wb; ++l)
+                {
+                    if(types[k][l]==0)
+                        continue;
+
+                    if(types[i][j]!=types[k][l])
+                        continue;
+
+                    LinkPoints lp;
+                    if(canNoCorner(i, j, k, l, lp)
+                            || canOneCorner(i, j, k, l, lp)
+                            || canTwoCorner(i, j, k, l, lp)) {
+
+                        btns[i][j]->hide();
+                        btns[k][l]->hide();
+
+                        QTest::qWait(100);
+
+                        btns[i][j]->show();
+                        btns[k][l]->show();
+
+                        QTest::qWait(50);
+
+                        btns[i][j]->hide();
+                        btns[k][l]->hide();
+
+                        QTest::qWait(100);
+
+                        btns[i][j]->show();
+                        btns[k][l]->show();
+
+                        drawLines(lp);
+
+                        return;
+                    }
+                }
+            }
+        }
+    }
+}
+
+int playworker::gameCheck()
+{
+    for(int i=1; i<=hb; i++)
+    {
+
+        for(int j=1; j<=wb; j++)
+        {
+            if(types[i][j]==0)
+                continue;
+
+            for (int k = i; k <= hb; ++k)
+            {
+                int l = 0;
+                if (k > i) l = 1;
+                else l = 1 + j;
+                for (; l <= wb; ++l)
+                {
+                    if(types[k][l]==0)
+                        continue;
+
+                    if(types[i][j]!=types[k][l])
+                        continue;
+
+                    LinkPoints lp;
+                    if(canNoCorner(i, j, k, l, lp)
+                            || canOneCorner(i, j, k, l, lp)
+                            || canTwoCorner(i, j, k, l, lp)) {
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+vector<int> playworker::gameRemind2(LinkPoints &lpp)
+{
+    for(int i=1; i<=hb; i++)
+    {
+
+        for(int j=1; j<=wb; j++)
+        {
+            if(types[i][j]==0)
+                continue;
+
+            for (int k = i; k <= hb; ++k)
+            {
+                int l = 0;
+                if (k > i) l = 1;
+                else l = 1 + j;
+                for (; l <= wb; ++l)
+                {
+                    if(types[k][l]==0)
+                        continue;
+
+                    if(types[i][j]!=types[k][l])
+                        continue;
+
+                    LinkPoints lp;
+                    if(canNoCorner(i, j, k, l, lp)
+                            || canOneCorner(i, j, k, l, lp)
+                            || canTwoCorner(i, j, k, l, lp)) {
+
+                        btns[i][j]->hide();
+                        btns[k][l]->hide();
+
+                        QTest::qWait(100);
+
+                        btns[i][j]->show();
+                        btns[k][l]->show();
+
+                        QTest::qWait(50);
+
+                        btns[i][j]->hide();
+                        btns[k][l]->hide();
+
+                        QTest::qWait(100);
+
+                        btns[i][j]->show();
+                        btns[k][l]->show();
+
+                        drawLines(lp);
+
+                        lpp = lp;
+                        return vector<int>{i, j, k, l};
+                    }
+                }
+            }
+        }
+    }
+    return vector<int>{};
+}
+
+int playworker::getTimes()
+{
+    return this->times;
+}
+
+void playworker::setTimes(int num)
+{
+    times = num;
+}
+
+void playworker::remakeMap(QGridLayout *uiMyGridLayout)
+{
+    int still = remains;
+    int remaining[still];  //用来存放没消掉的blocks
+    memset(remaining, 0, sizeof(remaining));
+    int k = 0;
+
+    //把没消掉的blocks存入数组
+    for(int i=0;i<=hb+1;i++){
+        for(int j=0;j<=wb+1;j++){
+            if(types[i][j]!=0){
+                remaining[k] = types[i][j];
+                k++;
+            }
+        }
+    }
+
+    //将blocks打乱放入另一个数组
+    std::random_shuffle(remaining,remaining+still);
+
+    //将存放的blocks重新放入地图
+    int a = 0;
+    for(int i=0;i<=hb+1;i++){
+        for(int j=0;j<=wb+1;j++){
+            if(types[i][j]!=0){
+                types[i][j] = remaining[a];
+                a++;
+            }
+        }
+    }
+
+    //设置地图
+    for(int i=0; i<=hb+1; i++)
+        for(int j=0; j<=wb+1; j++) {
+            btns[i][j] = new QPushButton;
+            if(i==0 || j==0 || i==hb+1 || j==wb+1) {
+                types[i][j] = 0;
+                btns[i][j]->setIcon(icons[types[i][j]]);
+            }
+            else {
+                btns[i][j]->setIcon(icons[types[i][j]]);
+                connect(btns[i][j], SIGNAL(clicked()),
+                        this, SLOT(btnsClicked()));
+            }
+            btns[i][j]->setMinimumWidth(60);
+            btns[i][j]->setMinimumHeight(60);
+            btns[i][j]->setMaximumWidth(60);
+            btns[i][j]->setMaximumHeight(60);
+            btns[i][j]->setIconSize(QSize(60,60));
+            uiMyGridLayout->addWidget(btns[i][j],
+                                      i, j, 1, 1,
+                                      Qt::AlignCenter | Qt::AlignHCenter);
+        }
+}
+
+void playworker::autoSolve()
+{   
+    // 若开始自动解题时没有解，重置到有解
+    if(!gameCheck()){
+        while(!gameCheck()){
+            remakeMap(m_uiGridLayout);
+        }
+    }
+
+    while(1)
+    {
+        LinkPoints lp;
+        vector<int> t = gameRemind2(lp);
+        int lastClickedH = t[0];
+        int lastClickedW = t[1];
+        int thisH = t[2];
+        int thisW = t[3];
+        if(t.size() != 0){
+            //点击音效
+            clickSound.play();
+
+            //画线连接两张图片
+            drawLines(lp);
+
+            //设置两张图片为被点击了
+            types[lastClickedH][lastClickedW] = types[thisH][thisW] = 0;
+            btns[thisH][thisW]->setIcon(icons[0]);
+            m_uiGridLayout->addWidget(btns[thisH][thisW],
+                                      thisH, thisW, 1, 1,
+                                      Qt::AlignCenter | Qt::AlignHCenter);
+            btns[lastClickedH][lastClickedW]->setIcon(icons[0]);
+            m_uiGridLayout->addWidget(btns[lastClickedH][lastClickedW],
+                                      lastClickedH, lastClickedW, 1, 1,
+                                      Qt::AlignCenter | Qt::AlignHCenter);
+
+            //重置点击按钮
+            lastClickedH = lastClickedW = 0;
+
+            //修改进度
+            remains -= 2;
+            emit updateProgressBar((100*(hb*wb-remains)/(hb*wb)));
+
+            //结束了，要不要继续玩
+            if (remains<=0) {
+                pTimer->stop();
+                endsSound.play();
+                emit goonPlay(score, 1);
+                return;
+            }
+            // 消完一对后若没有解，重置到有解的状态
+            if(!gameCheck()){
+                while(!gameCheck()){
+                    remakeMap(m_uiGridLayout);
+                }
+            }
+        }
+    }
+}
+
+void playworker::fail()
+{
+    pTimer->stop();
+    // 失败音乐
+    failSound.play();
+    emit goonPlay(score, 0);
+    return;
 }

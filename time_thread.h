@@ -18,6 +18,7 @@ private slots:
     void qtimeSlot();
 
 signals:
+    void timeEnd();
     void updateUI(int time);
 };
 
